@@ -136,33 +136,4 @@ async function generateSite(){
   try{const res=await fetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,type})}); const data=await res.json(); document.getElementById("researcherBody").innerHTML+=`<p>✓ ${data.images.length} images</p>`}catch(e){document.getElementById("researcherBody").innerHTML+=`<p>✓ Images locales</p>`}
   updateProgress(55,"🛡️ Sécurité...");
   document.getElementById("securityStatus").textContent="95/100"; document.getElementById("securityStatus").className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300";
-  document.getElementById("securityBody").innerHTML=`<p class="text-green-300">✓ Score 95/100</p><p>Aucune faille</p>`;
-  updateProgress(75,"🛠️ Correcteur...");
-  document.getElementById("fixerStatus").textContent="OK"; document.getElementById("fixerStatus").className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300";
-  document.getElementById("fixerBody").innerHTML=`<p class="text-green-300">✓ Lazy loading</p><p>✓ HD 1200px</p>`;
-  updateProgress(90,"🧪 Testeur...");
-  document.getElementById("testerStatus").textContent="95/100"; document.getElementById("testerStatus").className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300";
-  document.getElementById("testerBody").innerHTML=`<p class="text-green-300">✓ Perf 95</p><p>✓ SEO 98</p>`;
-  const html=generateSiteHTML(prompt,type);
-  state.html=html;
-  document.getElementById("sitePreview").srcdoc=html;
-  document.getElementById("previewSection").classList.remove("hidden");
-  document.getElementById("deploy").classList.remove("hidden");
-  document.getElementById("previewUrl").textContent=parseBrand(prompt).toLowerCase().replace(/[^a-z0-9]+/g,'-')+".bzv.app";
-  updateProgress(100,"✅ Rendu impeccable !");
-  toast("Site PRO: "+parseBrand(prompt));
-  document.getElementById("genText").textContent="GÉNÉRER SITE PRO";
-  try{
-    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt,type,html})});
-    const data=await res.json();
-    if(data.url){state.publicUrl=data.full_url; document.getElementById("publicLinkText").innerHTML=`<a href="${data.url}" target="_blank" class="text-indigo-400 underline">${data.full_url}</a>`; document.getElementById("previewUrl").innerHTML=`<a href="${data.url}" target="_blank" class="text-indigo-400 underline">${data.full_url} ↗</a>`; setTimeout(()=>window.open(data.url,'_blank'),800);}
-  }catch(e){}
-  setTimeout(()=>{document.getElementById("previewSection").scrollIntoView({behavior:"smooth"})},300);
-}
-function downloadHTML(){if(!state.html){toast("Génère d'abord");return}const b=new Blob([state.html],{type:"text/html"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=parseBrand(document.getElementById("promptInput").value||"site").toLowerCase().replace(/ /g,'-')+".html";a.click()}
-function openPreviewFullscreen(){if(!state.html)return;const w=window.open();w.document.write(state.html);w.document.close()}
-function copyLink(){if(state.publicUrl){navigator.clipboard.writeText(state.publicUrl);toast("Lien copié")}else toast("Pas de lien")}
-function openLink(){if(state.publicUrl) window.open(state.publicUrl,'_blank')}
-</script>
-</body>
-</html>
+  document.getElementById("securityBody").innerHTML=`<p class="text-green-300">✓ Score 95/100</p><p>Aucune faille</p>`
